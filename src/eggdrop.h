@@ -385,6 +385,8 @@ struct dcc_t {
   unsigned int port;
 #ifdef TLS
   int ssl;
+#  define DCC_TLS_USE 1
+#  define DCC_TLS_REJ 2
 #endif
   struct userrec *user;
   char nick[NICKLEN];

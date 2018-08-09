@@ -800,7 +800,7 @@ static int tcl_istls STDVAR
     Tcl_AppendResult(irp, "invalid idx", NULL);
     return TCL_ERROR;
   }
-  if (dcc[j].ssl)
+  if (dcc[j].ssl & DCC_TLS_USE)
     Tcl_AppendResult(irp, "1", NULL);
   else
     Tcl_AppendResult(irp, "0", NULL);
@@ -822,7 +822,7 @@ static int tcl_starttls STDVAR
     Tcl_AppendResult(irp, "invalid idx", NULL);
     return TCL_ERROR;
   }
-  if (dcc[j].ssl) {
+  if (dcc[j].ssl & DCC_TLS_USE) {
     Tcl_AppendResult(irp, "already started", NULL);
     return TCL_ERROR;
   }
@@ -862,7 +862,7 @@ static int tcl_tlsstatus STDVAR
     return TCL_ERROR;
   }
   j = findsock(dcc[i].sock);
-  if (!j || !dcc[i].ssl || !td->socklist[j].ssl) {
+  if (!j || !(dcc[i].ssl & DCC_TLS_USE) || !td->socklist[j].ssl) {
     Tcl_AppendResult(irp, "not a TLS connection", NULL);
     return TCL_ERROR;
   }
